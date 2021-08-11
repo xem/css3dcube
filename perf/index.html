@@ -1,0 +1,34 @@
+<div id=viewport>
+  <div id=camera>
+    <div id=scene>
+    </div>
+  </div>
+</div>
+<br>
+<button id=add>Add 10 cubes</button> <input id=cubes value=0 size=1 readonly>
+<style>
+#viewport{width:500px;height:500px;overflow:hidden;border:1px solid;position:relative;perspective:500px}
+#viewport *{transform-style:preserve-3d;box-sizing:border-box}
+#camera{width:0;height:0;position:absolute;top:80%;left:50%}
+#scene{position:absolute;width:500px;height:500px;background:#8D8}
+.cube {width:10px;height:10px;position:absolute}
+.face{width:10px;height:10px;position:fixed;background:orange;transform-origin:50% 100%;backface-visibility:hidden}
+.up{transform:translateZ(10px)}
+.left{transform:translate3D(-5px,-5px,0)rotateZ(90deg)rotateX(-90deg)}
+.right{transform:translate3D(5px,-5px,0)rotateZ(-90deg)rotateX(-90deg)}
+.front{transform:rotateX(-90deg)}
+.back{transform:translate3D(0,-10px,0)rotateZ(180deg)rotateX(-90deg)}
+.down{transform:rotateX(180deg)}
+</style>
+<script>
+
+ncubes = 0;
+RZ = 0;
+setInterval(()=>{RZ++;scene.style.transform=`translateX(-250px)translateY(-250px)translateZ(-500px)rotateX(45deg)rotateZ(${RZ}deg)`},16);
+add.onclick=()=>{
+  cubes.value = ncubes += 10;
+  for(i=10;i--;){
+    scene.insertAdjacentHTML("beforeEnd",`<div class=cube style="transform:translateX(${Math.random()*500}px)translateY(${Math.random()*500}px)translateZ(${Math.random()*500}px)"><div class="face left"></div><div class="face back"></div><div class="face right"></div><div class="face front"></div><div class="face up"></div>`);
+  }
+} 
+</script>
