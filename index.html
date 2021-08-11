@@ -1,0 +1,40 @@
+<div id=viewport>
+  <div id=camera>
+    <div id=scene>
+      <div id=floor></div>
+      <div id=cube></div>
+    
+    </div>
+  </div>
+</div>
+
+<style>
+#viewport{width:500px;height:500px;overflow:hidden;border:1px solid;position:relative;perspective:500px}
+#viewport *{transform-style:preserve-3d;box-sizing:border-box}
+#camera{width:0;height:0;position:absolute;top:50%;left:50%}
+#scene{transition:.1s linear}
+#floor,#cube{transform:translateX(-50%)translateY(-50%)}
+#floor{position:absolute;width:450px;height:450px;background:#8D8}
+#cube{position:absolute;width:100px;height:100px;background:orange}
+#cube{width:100px;height:100px;background:#def}
+#cube:before{content:'';display:block;position:fixed;width:100px;height:100px;background:#abc;transform:rotateX(90deg)translateZ(50px)translateY(-50px)}
+#cube:after{content:'';display:block;position:fixed;width:100px;height:100px;background:#def;transform:rotateY(90deg)translateX(50px)translateZ(50px)}
+.south #cube{transform:rotateX(-90deg)translateY(-50px)translateZ(50px)}
+.east #cube{transform:rotateX(-90deg)rotateY(90deg)translateY(-50px)translateZ(50px)}
+.north #cube{transform:rotateX(-90deg)rotateY(180deg)translateY(-50px)translateZ(50px)}
+.west #cube{transform:rotateX(-90deg)rotateY(270deg)translateY(-50px)translateZ(50px)}
+</style>
+
+<script>
+rz = 0;
+setInterval(()=>{
+ rz += 2;
+ scene.style.transform = `translateZ(-150px)rotateX(45deg)rotateZ(${rz}deg)`;
+ offset = 10;
+ if((rz % 360) < 0 + offset) { document.body.className = "west" }
+ else if((rz % 360) < 90 + offset) { document.body.className = "south" }
+ else if((rz % 360) < 180 + offset) { document.body.className = "east" }
+ else if((rz % 360) < 270 + offset) { document.body.className = "north" }
+ else { document.body.className = "west" }
+},16);
+</script>
