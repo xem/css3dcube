@@ -2,33 +2,36 @@
   <div id=camera>
     <div id=scene>
       <div id=floor></div>
-      <div class="cube south" style="transform:translateX(100px)translateY(100px)translateZ(100px)"></div>
-      <div class="cube south" style="transform:translateX(-200px)translateY(-200px) translateZ(200px)"></div>
-      <div class="cube south" style="transform:translateX(300px)translateY(-100px) translateZ(300px)"></div>
+      <div class="cube front right up" X=-2 Y=-2 Z=2 style="transform:translateX(-200px)translateY(-200px)translateZ(200px)"><div></div></div>
+      <div class="cube back left up" X=1 Y=1 Z=1 style="transform:translateX(100px)translateY(100px)translateZ(100px)"><div></div></div>
+      <div class="cube front left up" X=3 Y=-1 Z=4 style="transform:translateX(300px)translateY(-100px)translateZ(400px)"><div></div></div>
     
     </div>
   </div>
 </div>
-<p>Camera X <input type=range id=cxr value=0 min=-1000 max=1000 step=10><input id=cx value=0 size=2> Y <input type=range id=cyr value=0 min=-1000 max=1000 step=10><input id=cy value=0 size=2> Z <input type=range id=czr value=500 min=10 max=1000 step=10><input id=cz value=500 size=2>
-<p>Camera RX <input type=range id=crxr value=0 min=0 max=89><input id=crx value=0 size=2> RZ <input type=range id=crzr value=0 min=-180 max=180><input id=crz value=0 size=2>
+<p>Camera X <input type=range id=cxr value=0 min=-1000 max=1000 step=10><input id=cx value=0 size=2> Y <input type=range id=cyr value=0 min=-1000 max=1000 step=10><input id=cy value=0 size=2> Z <input type=range id=czr value=900 min=10 max=1000 step=10><input id=cz value=900 size=2>
+<p>Camera RX <input type=range id=crxr value=0 min=0 max=180><input id=crx value=0 size=2> RZ <input type=range id=crzr value=0 min=-180 max=180><input id=crz value=0 size=2>
 
 <style>
-#viewport{width:1000px;height:500px;overflow:hidden;border:1px solid;position:relative;perspective:300px}
+#viewport{width:1000px;height:700px;overflow:hidden;border:1px solid;position:relative;perspective:500px}
 #viewport *{transform-style:preserve-3d;box-sizing:border-box}
 #camera{width:0;height:0;position:absolute;top:50%;left:50%}
-#floor,#cube{transform:translateX(-50%)translateY(-50%)}
-#floor{position:absolute;width:450px;height:450px;background:#8D8}
-.cube{position:absolute;width:100px;height:100px;background:orange}
-.cube{width:100px;height:100px;background:#def}
-.cube:before{content:'';display:block;position:fixed;width:100px;height:100px;background:#abc;transform:rotateX(90deg)translateZ(50px)translateY(-50px)}
-.cube:after{content:'';display:block;position:fixed;width:100px;height:100px;background:#def;transform:rotateY(90deg)translateX(50px)translateZ(50px)}
-.cube.south{transform:rotateX(-90deg)translateY(-50px)translateZ(50px)}
-.cube.east{transform:rotateX(-90deg)rotateY(90deg)translateY(-50px)translateZ(50px)}
-.cube.north{transform:rotateX(-90deg)rotateY(180deg)translateY(-50px)translateZ(50px)}
-.cube.west{transform:rotateX(-90deg)rotateY(270deg)translateY(-50px)translateZ(50px)}
+#scene{transform:translateZ(500px)rotateX(0deg)rotateZ(0deg)translateX(0px)translateY(0px)translateZ(-900px)}
+#floor{transform:translateX(-50%)translateY(-50%);position:absolute;width:600px;height:600px;background:#8D8}
+.cube div{position:absolute;width:100px;height:100px;background:orange}
+.cube.front.right div{transform:rotateX(-90deg)translateY(-50px)translateZ(50px)}
+.cube.right.back div{transform:rotateX(-90deg)rotateY(90deg)translateY(-50px)translateZ(50px)}
+.cube.back.left div{transform:rotateX(-90deg)rotateY(180deg)translateY(-50px)translateZ(50px)}
+.cube.left.front div{transform:rotateX(-90deg)rotateY(270deg)translateY(-50px)translateZ(50px)}
+.cube div:after{content:'';display:block;position:fixed;width:100px;height:100px;background:orange;transform:rotateY(90deg)translateX(50px)translateZ(50px)}
+.cube div:before{content:'';display:block;position:fixed;width:100px;height:100px;background:orange;transform:rotateX(90deg)translateZ(50px)translateY(-50px)}
+.cube.down div:before{content:'';display:block;position:fixed;width:100px;height:100px;background:orange;transform:rotateX(90deg)translateZ(-50px)translateY(-50px)}
 </style>
 
 <script>
+oldCX = 0;
+oldCY = 0;
+oldCZ = 0;
 onload =
 cxr.onchange = cyr.onchange = czr.onchange = crxr.onchange = crzr.onchange =
 cxr.oninput = cyr.oninput = czr.oninput = crxr.oninput = crzr.oninput = () => {
@@ -37,6 +40,24 @@ cxr.oninput = cyr.oninput = czr.oninput = crxr.oninput = crzr.oninput = () => {
   CZ = (cz.value = czr.value);
   CRX = (crx.value = crxr.value);
   CRZ = (crz.value = crzr.value);
-  scene.style.transform = `translateZ(300px)rotateX(${CRX}deg)rotateZ(${CRZ}deg)translateX(${-CX}px)translateY(${-CY}px)translateZ(${-CZ}px)`;
+  scene.style.transform = `translateZ(500px)rotateX(${CRX}deg)rotateZ(${CRZ}deg)translateX(${-CX}px)translateY(${-CY}px)translateZ(${-CZ}px)`;
+  CX = Math.floor(CX / 100);
+  CY = Math.floor(CY / 100);
+  CZ = Math.floor(CZ / 100);
+  if(oldCX != CX){
+    document.querySelectorAll(`[X='${CX-1}']`).forEach(e=>{e.classList.remove("left");e.classList.add("right")});
+    document.querySelectorAll(`[X='${CX+1}']`).forEach(e=>{e.classList.remove("right");e.classList.add("left")});
+  }
+  if(oldCY != CY){
+    document.querySelectorAll(`[Y='${CY-1}']`).forEach(e=>{e.classList.remove("back");e.classList.add("front")});
+    document.querySelectorAll(`[Y='${CY+1}']`).forEach(e=>{e.classList.remove("front");e.classList.add("back")});
+  }
+  if(oldCZ != CZ){
+    document.querySelectorAll(`[Z='${CZ-1}']`).forEach(e=>{e.classList.remove("down");e.classList.add("up")});
+    document.querySelectorAll(`[Z='${CZ+1}']`).forEach(e=>{e.classList.remove("up");e.classList.add("down")});
+  }
+  oldCX = CX;
+  oldCY = CY;
+  oldCZ = CZ;
 }
 </script>
