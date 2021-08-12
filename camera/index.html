@@ -1,0 +1,40 @@
+<div id=viewport>
+  <div id=camera>
+    <div id=scene>
+      <div id=floor></div>
+      <div class="cube south"></div>
+    
+    </div>
+  </div>
+</div>
+<p>Camera X <input type=range id=cxr value=0 min=-1000 max=1000 step=10><input id=cx value=0 size=2> Y <input type=range id=cyr value=0 min=-1000 max=1000 step=10><input id=cy value=0 size=2> Z <input type=range id=czr value=500 min=1 max=1000 step=10><input id=cz value=500 size=2>
+<p>Camera RX <input type=range id=crxr value=0 min=0 max=89><input id=crx value=0 size=2> RZ <input type=range id=crzr value=0 min=-180 max=180><input id=crz value=0 size=2>
+
+<style>
+#viewport{width:500px;height:500px;overflow:hidden;border:1px solid;position:relative;perspective:500px}
+#viewport *{transform-style:preserve-3d;box-sizing:border-box}
+#camera{width:0;height:0;position:absolute;top:50%;left:50%}
+#floor,#cube{transform:translateX(-50%)translateY(-50%)}
+#floor{position:absolute;width:450px;height:450px;background:#8D8}
+.cube{position:absolute;width:100px;height:100px;background:orange}
+.cube{width:100px;height:100px;background:#def}
+.cube:before{content:'';display:block;position:fixed;width:100px;height:100px;background:#abc;transform:rotateX(90deg)translateZ(50px)translateY(-50px)}
+.cube:after{content:'';display:block;position:fixed;width:100px;height:100px;background:#def;transform:rotateY(90deg)translateX(50px)translateZ(50px)}
+.cube.south{transform:rotateX(-90deg)translateY(-50px)translateZ(50px)}
+.cube.east{transform:rotateX(-90deg)rotateY(90deg)translateY(-50px)translateZ(50px)}
+.cube.north{transform:rotateX(-90deg)rotateY(180deg)translateY(-50px)translateZ(50px)}
+.cube.west{transform:rotateX(-90deg)rotateY(270deg)translateY(-50px)translateZ(50px)}
+</style>
+
+<script>
+onload =
+cxr.onchange = cyr.onchange = czr.onchange = crxr.onchange = crzr.onchange =
+cxr.oninput = cyr.oninput = czr.oninput = crxr.oninput = crzr.oninput = () => {
+  CX = (cx.value = cxr.value);
+  CY = (cy.value = cyr.value);
+  CZ = (cz.value = czr.value);
+  CRX = (crx.value = crxr.value);
+  CRZ = (crz.value = crzr.value);
+  scene.style.transform = `translateZ(500px)translateX(${-CX}px)translateY(${-CY}px)translateZ(${-CZ}px)rotateX(${CRX}deg)rotateZ(${CRZ}deg)`;
+}
+</script>

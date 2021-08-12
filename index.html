@@ -12,7 +12,6 @@
 #viewport{width:500px;height:500px;overflow:hidden;border:1px solid;position:relative;perspective:500px}
 #viewport *{transform-style:preserve-3d;box-sizing:border-box}
 #camera{width:0;height:0;position:absolute;top:50%;left:50%}
-#scene{transition:.1s linear}
 #floor,#cube{transform:translateX(-50%)translateY(-50%)}
 #floor{position:absolute;width:450px;height:450px;background:#8D8}
 #cube{position:absolute;width:100px;height:100px;background:orange}
@@ -30,7 +29,7 @@ rz = 0;
 setInterval(()=>{
  rz += 2;
  scene.style.transform = `translateZ(-150px)rotateX(45deg)rotateZ(${rz}deg)`;
- offset = 10;
+ offset = 0;
  if((rz % 360) < 0 + offset) { document.body.className = "west" }
  else if((rz % 360) < 90 + offset) { document.body.className = "south" }
  else if((rz % 360) < 180 + offset) { document.body.className = "east" }
