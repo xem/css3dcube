@@ -35,6 +35,6 @@ cxr.oninput = cyr.oninput = czr.oninput = crxr.oninput = crzr.oninput = () => {
   CZ = (cz.value = czr.value);
   CRX = (crx.value = crxr.value);
   CRZ = (crz.value = crzr.value);
-  scene.style.transform = `translateZ(500px)translateX(${-CX}px)translateY(${-CY}px)translateZ(${-CZ}px)rotateX(${CRX}deg)rotateZ(${CRZ}deg)`;
+  scene.style.transform = `translateZ(500px)rotateX(${CRX}deg)rotateZ(${CRZ}deg)translateX(${-CX}px)translateY(${-CY}px)translateZ(${-CZ}px)`;
 }
 </script>
