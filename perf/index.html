@@ -24,11 +24,16 @@
 
 ncubes = 0;
 RZ = 0;
-setInterval(()=>{RZ++;scene.style.transform=`translateX(-250px)translateY(-250px)translateZ(-500px)rotateX(45deg)rotateZ(${RZ}deg)`},16);
+setInterval(()=>{
+  RZ++;scene.style.transform=`translateX(-250px)translateY(-250px)translateZ(-500px)rotateX(45deg)rotateZ(${RZ}deg)`
+},33);
 add.onclick=()=>{
   cubes.value = ncubes += 10;
   for(i=10;i--;){
-    scene.insertAdjacentHTML("beforeEnd",`<div class=cube style="transform:translateX(${Math.random()*500}px)translateY(${Math.random()*500}px)translateZ(${Math.random()*500}px)"><div class="face left"></div><div class="face back"></div><div class="face right"></div><div class="face front"></div><div class="face up"></div>`);
+    scene.insertAdjacentHTML("beforeEnd",`<div class=cube style="transform:translateX(${Math.random()*500}px)translateY(${Math.random()*500}px)translateZ(${Math.random()*500}px)"><div class="face left"></div><div class="face right"></div><div class="face front"></div><div class="face up"></div><div class="face back">`);
   }
 } 
+
+
+var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);
 </script>
