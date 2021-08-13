@@ -60,32 +60,10 @@
   /* The first translate3d is the cube's position in the scene. The coordinates were set in the cube div's inline CSS. The other transformations define where the side should be within the cube, they get their values from the classes below */
 }
 
-.cube.front.right {
---rX: -90deg;
---y2: -5px;
---z2: 5px;
-}
-
-.cube.right.back {
---rX: -90deg;
---rY: 90deg;
---y2: -5px;
---z2: 5px;
-}
-
-.cube.back.left {
---rX: -90deg;
---rY: 180deg;
---y2: -5px;
---z2: 5px;
-}
-
-.cube.left.front {
---rX: -90deg;
---rY: 270deg;
---y2: -5px;
---z2: 5px;
-}
+.cube.front.right div{transform:rotateX(-90deg)translateY(-5px)translateZ(5px)}
+.cube.right.back div{transform:rotateX(-90deg)rotateY(90deg)translateY(-5px)translateZ(5px)}
+.cube.back.left div{transform:rotateX(-90deg)rotateY(180deg)translateY(-50px)translateZ(5px)}
+.cube.left.front div{transform:rotateX(-90deg)rotateY(270deg)translateY(-50px)translateZ(5px)}
 
 .cube:after {
   content: '';
@@ -160,7 +138,7 @@ add.onclick=()=>{
     cubeX = Math.floor(Math.random()*50)-25;
     cubeY = Math.floor(Math.random()*50)-25;
     cubeZ = Math.floor(Math.random()*50);
-    scene.insertAdjacentHTML("beforeEnd",`<div class="cube front right up" X=${cubeX} Y=${cubeX} Z=${cubeZ} style="--x:${cubeX*10}px; --y:${cubeY*10}px; --z:${cubeZ*10}px">`);
+    scene.insertAdjacentHTML("beforeEnd",`<div class="cube front right up" X=${cubeX} Y=${cubeX} Z=${cubeZ} style="transform:translateX(${cubeX*10}px)translateY(${cubeY*10}px)translateZ(${cubeZ*10}px)"><div>`);
   }
 } 
 
